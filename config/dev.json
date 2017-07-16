@@ -14,7 +14,12 @@
     "applications": [
         {
             "name": "William Taylor",
-            "description": "Random description",
+            "description": [
+                "First sentance.",
+                "Second sentance.",
+                "Third sentance.",
+                "Fourth sentance."   
+            ],
             "website": "http://www.williamsamtaylor.co.uk",
             "github": "http://www.github.com/william-taylor"
         }

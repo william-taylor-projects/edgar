@@ -19,14 +19,6 @@
             margin-bottom: 30px;
         }
 
-        .center {
-            text-align: center;
-        }
-
-        .justify {
-            text-align: justify;
-        }
-
         .card {
             text-align: center;
             border: 1px solid rgba(97, 91, 91, 0.55);
@@ -49,10 +41,6 @@
             border-bottom: 1px solid rgba(97, 91, 91, 0.55);
         }
         
-        .card {
-            margin-top:50px;
-        }
-
         .button {
             margin-right: 5px;
             margin-left: 5px;
@@ -64,7 +52,6 @@
             text-shadow: 2px 4px 3px rgba(0, 0, 0, .5);
             color: #fff7f7;
         }
-
     </style>
 </head>
 <body ng-app='edgarApp' ng-controller="appCtrl">
@@ -76,11 +63,11 @@
     </div>
     <div id='apps'>
         <div class='container'>
-            <div class='card one-half column' ng-repeat='app in apps'>
+            <div class='card one-half column' style='margin-top:50px;' ng-repeat='app in apps'>
                 <div class='card-body'>
                     <h3>{{app.name}}</h3>
-                    <p class='justify'>
-                        {{app.description}}    
+                    <p style='text-align: justify;'>
+                        {{app.description.join(' ')}}    
                     </p>
                     <a class="button" ng-href={{app.website}} target='_blank'>View</a>
                     <a class="button" ng-href={{app.github}} target='_blank'>Code</a>
