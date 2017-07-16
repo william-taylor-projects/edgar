@@ -1,3 +1,51 @@
 {
-    "port": 3000
+    "port": 3000,
+    "background": "https://cn.pling.com/img/6/2/7/f/9c8f7a703f993fbee422fc92e1415ff04642.jpg",
+    "credentials": {
+        "username": "cf71f02c99b3f5bec24fed25222dea337f0fc7dbcf",
+        "password": "f579b5709ab8bff388",
+        "host": "cb75b56dd5bbe6a3c121ed25222dea337f0f84"
+    },
+    "domains": [
+        {
+            "domain": "35.176.95.30",
+            "folder": "/public/tools/ping/",
+            "description": "Simple ping page for testing the server"
+        },
+        {
+            "domain": "dev.list.williamsamtaylor.co.uk",
+            "folder": "/public/tools/table/",
+            "description": "Table of all apps on the server"
+        },
+        {
+            "domain": "dev.ca.williamsamtaylor.co.uk",
+            "folder": "/public/tools/ping/",
+            "description": "Simple code analyser for basic code"
+        },
+        {
+            "domain": "dev.mb.williamsamtaylor.co.uk",
+            "folder": "/public/tools/ping/",
+            "description": "Mailbox client for personal email accounts"
+        },
+        {
+            "domain": "dev.mgd.williamsamtaylor.co.uk",
+            "folder": "/public/tools/ping/",
+            "description": "Mobile game submitted as coursework"
+        },
+        {
+            "domain": "dev.sg.williamsamtaylor.co.uk",
+            "folder": "/public/tools/ping/",
+            "description": "Server for certification and progress recording"
+        },
+        {
+            "domain": "dev.uws.williamsamtaylor.co.uk",
+            "folder": "/public/tools/ping/",
+            "description": "Server for the UWS Campus Mobile App"
+        },
+        {
+            "domain": "dev.williamsamtaylor.co.uk",
+            "folder": "/public/tools/ping/",
+            "description": "Simple ping page for the server"
+        }
+    ]
 }

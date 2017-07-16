@@ -1,3 +1,44 @@
 {
-    "port": 3000
+    "port": 3000,
+    "background": "http://eskipaper.com/images/london-background-1.jpg",
+    "credentials": {
+        "username": "cf71f02c99b3f5bec24fed25222dea337f0fc7dbcf",
+        "password": "f579b5709ab8bff388",
+        "host": "cb75b56dd5bbe6a3c121ed25222dea337f0f84"
+    },
+    "domains": [
+        {
+            "domain": "35.176.151.167",
+            "folder": "/tools/ping/"
+        },
+        {
+            "domain": "prod.williamsamtaylor.co.uk",
+            "folder": "/tools/ping/"
+        },
+        {
+            "domain": "prod.list.williamsamtaylor.co.uk",
+            "folder": "/tools/table/"
+        },
+        {
+            "domain": "*.williamsamtaylor.co.uk",
+            "folder": "/public/william-taylor/"
+        },
+        {
+            "domain": "williamsamtaylor.co.uk",
+            "folder": "/public/william-taylor/"
+        },
+        {
+            "domain": "youngmoneyren.org",
+            "folder": "/public/young-money-ren/",
+            "server": "./public/young-money-ren/ext/server.js"
+        },
+        {
+            "domain": "ladywell-antiques.co.uk",
+            "folder": "/public/ladywell-antiques/"
+        },
+        {
+            "domain": "paisleyymca.org",
+            "folder": "/public/paisley-ymca/"
+        }
+    ]
 }
