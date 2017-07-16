@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,8 +37,6 @@
         }
 
         #landing {
-            background: url("http://eskipaper.com/images/london-background-1.jpg");
-            background-size:cover;
             padding-top: 125px;
             height: 250px;
             box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.68);
@@ -70,63 +67,43 @@
 
     </style>
 </head>
-
-<body>
-    <div id='landing'>
+<body ng-app='edgarApp' ng-controller="appCtrl">
+    <div id='landing' ng-style="{'background':'no-repeat center center scroll url(' + background + ')'}">
         <div class="u-full-width center">
             <h1>App Table</h1>
-            <h3 style='font-size: 24px;'>Node-js-512MB-London-1</h3>
+            <h3 style='font-size: 24px;'>{{name}}</h3>
         </div>
     </div>
     <div id='apps'>
         <div class='container'>
-            <div class='row'>
-                <div class='card one-half column'>
-                    <div class='card-body'>
-                        <h3>William Taylor</h3>
-                        <p class='justify'>
-                            My portfolio website was built with Skeleton and designed to be as lightweight as possible.  
-                            It consists of an email form, timeline and skills section. The total website size is smaller than the JQuery JavaScript library.
-                        </p>
-                        <a class="button" href="http://www.williamsamtaylor.co.uk" target='_blank'>View</a>
-                        <a class="button" href="https://www.github.com/william-taylor/portfolio" target='_blank'>Code</a>
-                    </div>
-                </div>
-                <div class='card one-half column'>
-                    <div class='card-body'>
-                        <h3>Ladywell Antiques</h3>
-                        <p class='justify'>
-                            Ladywell Antiques is an app built entirely in Angular to market antique items through a shop like website. Content on the website can by dynamically changed through the admin console and uses Bootstrap 4.
-                        </p>
-                        <a class="button" href="http://www.ladywell-antiques.co.uk" target='_blank'>View</a>
-                        <a class="button" href="https://github.com/full-stack-dev/ladywell-antiques" target='_blank'>Code</a>
-                   
-                    </div>
-                </div>
-            </div>
-            <div class='row'>
-                <div class='card one-half column'>
-                    <div class='card-body'>
-                        <h3>Young Money Ren</h3>
-                        <p class='justify'>
-                            Young Money Ren is a web app written in React, Redux and Material UI. The app is cross platform and exists on the Android and iOS app stores for the widest possible outreach. Was designed in collaboration with Barnardo's.    
-                        </p>
-                        <a class="button" href="http://www.youngmoneyren.org" target='_blank'>View</a>
-                        <a class="button" href="https://github.com/full-stack-dev/young-money-renfrewshire" target='_blank'>Code</a>
-                    </div>
-                </div>
-                <div class='card one-half column'>
-                    <div class='card-body'>
-                        <h3>YMCA Paisley</h3>
-                        <p class='justify'>
-                            YMCA Paisley is an AngularJs port of a template WordPress website designed to improve on the original with less bugs, better performance and a more modern UI. Styling is done with help from the Bulma CSS framework. 
-                        </p>
-                        <a class="button" href="http://www.paisleyymca.org" target='_blank'>View</a>
-                        <a class="button" href="https://github.com/full-stack-dev/ymca-paisley" target='_blank'>Code</a>
-                    </div>
+            <div class='card one-half column' ng-repeat='app in apps'>
+                <div class='card-body'>
+                    <h3>{{app.name}}</h3>
+                    <p class='justify'>
+                        {{app.description}}    
+                    </p>
+                    <a class="button" ng-href={{app.website}} target='_blank'>View</a>
+                    <a class="button" ng-href={{app.github}} target='_blank'>Code</a>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+        var app = angular.module('edgarApp', []);
+        app.controller('appCtrl', function($scope, $http) {
+            $http.get("get-server-info").then(function(response) {
+                $scope.background = response.data.background;
+                $scope.message = response.data.message;
+                $scope.link = response.data.link;
+                $scope.name = response.data.name;
+            });
+
+            $http.get('get-applications').then(function(response) {
+                $scope.apps = response.data;
+            });
+        });
+    </script>
 </body>
 </html>

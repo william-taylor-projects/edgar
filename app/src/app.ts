@@ -47,8 +47,8 @@ const useTools = (config: EdgarConfig, router) => {
     const { server } = config;
 
     if(server.localhost) {
-        router.use(vhost(`*.localhost`, express.static(`./tools/ping/`)));
-        router.use(vhost(`localhost`, express.static(`./tools/ping/`)));
+        router.use(vhost(`*.localhost`, express.static(`./tools/table/`)));
+        router.use(vhost(`localhost`, express.static(`./tools/table/`)));
     }
 }
 

@@ -8,14 +8,13 @@
 
     <title>Welcome</title>
 
+    <link href="https://cdn2.iconfinder.com/data/icons/amazon-aws-stencils/100/SDKs_copy_nodeJS-128.png" rel="icon">
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn2.iconfinder.com/data/icons/amazon-aws-stencils/100/SDKs_copy_nodeJS-128.png" rel="icon">
 
     <style>
-        html,
-        body {
+        html, body {
             width: 100%;
             height: 100%;
             font-family: 'Titillium Web', sans-serif;
@@ -52,8 +51,8 @@
             height: 100%;
             -webkit-background-size: cover;
             -moz-background-size: cover;
-            background-size: cover;
             -o-background-size: cover;
+            background-size: cover;
         }
         
         h1, h3 {
@@ -62,14 +61,27 @@
         }
     </style>
 </head>
-<body>
-    <header id="top" class="header" style=' background: url("https://cn.pling.com/img/6/2/7/f/9c8f7a703f993fbee422fc92e1415ff04642.jpg") no-repeat center center scroll'>
+<body ng-app="edgarApp" ng-controller='appCtrl'>
+    <header id="top" class="header" ng-style="{'background':'no-repeat center center scroll url(' + background + ')'}">
         <div class="text-vertical-center">
-            <h1>Node-js-512MB-London-2</h1>
-            <h3>Lightsail Instance Operating Normally</h3>
+            <h1>{{name}}</h1>
+            <h3>{{message}}</h3>
             <br>
-            <a href="https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/Node-js-512MB-London-2/connect" class="btn btn-dark btn-lg">Login</a>
+            <a ng-href={{link}} target="_blank" class="btn btn-dark btn-lg">Login</a>
         </div>
     </header>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+        var app = angular.module('edgarApp', []);
+        app.controller('appCtrl', function($scope, $http) {
+            $http.get("get-server-info").then(function(response) {
+                $scope.background = response.data.background;
+                $scope.message = response.data.message;
+                $scope.link = response.data.link;
+                $scope.name = response.data.name;
+            });
+        });
+    </script>
 </body>
 </html>

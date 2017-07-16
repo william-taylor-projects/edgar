@@ -2,6 +2,7 @@
     "email": true,
     "port": 3000,
     "server": {
+        "background": "https://cn.pling.com/img/6/2/7/f/9c8f7a703f993fbee422fc92e1415ff04642.jpg",
         "name": "Node-js-512MB-London-2",
         "message": "Lightsail Instance Operating Normally",
         "link": "https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/Node-js-512MB-London-2/connect",
@@ -12,13 +13,12 @@
     },
     "applications": [
         {
-            "name": "",
-            "description": "",
-            "website": "",
-            "github": ""
+            "name": "William Taylor",
+            "description": "Random description",
+            "website": "http://www.williamsamtaylor.co.uk",
+            "github": "http://www.github.com/william-taylor"
         }
     ],
-    "background": "https://cn.pling.com/img/6/2/7/f/9c8f7a703f993fbee422fc92e1415ff04642.jpg",
     "credentials": {
         "username": "cf71f02c99b3f5bec24fed25222dea337f0fc7dbcf",
         "password": "f579b5709ab8bff388",
