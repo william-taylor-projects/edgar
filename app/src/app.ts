@@ -32,31 +32,63 @@ const decrypt = (json: any) => {
 }
 
 interface EdgarConfig {
-    credentials: Object[];
+    credentials: Object;
     applications: Object[];
-    server: Object;
+    server: any;
+    domains: any[];
 }
 
-const read = (fn: string) : EdgarConfig => {
-    const contents = fs.readFileSync(fn); 
-    return JSON.parse(contents.toString());  
+const read = (fn: string): EdgarConfig => {
+    const contents = fs.readFileSync(fn);
+    return JSON.parse(contents.toString());
+}
+
+const useTools = (config: EdgarConfig, router) => {
+    const { server } = config;
+
+    if(server.localhost) {
+        router.use(vhost(`*.localhost`, express.static(`./tools/ping/`)));
+        router.use(vhost(`localhost`, express.static(`./tools/ping/`)));
+    }
+}
+
+const useEmail = (router) => {
+    const { username, password, host } = decrypt(config.credentials);
+    const emailAccount = emailjs.server.connect({
+        user: username,
+        password: password,
+        host: host,
+        ssl: true
+    });
+
+    router.post('/send', (req, res) => {
+        const { email, subject, message } = req.body;
+
+        if (emailValidator.validate(email) && subject && message) {
+            emailAccount.send({
+                text: `${message} Email : ${email}`,
+                from: "wi11berto@yahoo.co.uk",
+                to: "wi11berto@yahoo.co.uk",
+                subject: subject
+            });
+
+            res.json({ msg: "Your email has been sent.", sent: true });
+        } else {
+            res.json({ msg: "Invalid request", sent: false, body: req.body });
+        }
+    });
 }
 
 const config = read('../config/dev.json');
 const router = express();
 const port = 3000;
 
-const { username, password, host } = decrypt(config.credentials);
-const emailServer = emailjs.server.connect({ 
-    user: username, 
-    password: password, 
-    host: host, 
-    ssl: true 
-});
-
 router.use(bodyParser.json());
 router.use(compression());
 router.use(cors());
+
+useTools(config, router);
+useEmail(router);
 
 router.get('/get-applications', (req, res) => {
     res.json(config.applications);
@@ -66,24 +98,34 @@ router.get('/get-server-info', (req, res) => {
     res.json(config.server);
 });
 
-router.post('/send', (req, res) => {
-    const { email, subject, message } = req.body;
 
-    if (emailValidator.validate(email) && subject && message) {
-        const msg = {
-            text: `${message} Email : ${email}`,
-            from: "wi11berto@yahoo.co.uk",
-            to: "wi11berto@yahoo.co.uk",
-            subject: subject
+/*
+config.domains.forEach(desc => {
+    const { folder, server, domain } = desc;
+
+    if(server && server.length > 0) {
+        const extension = require(server);
+
+        if(typeof extension === 'function') {
+            extension(router);
+        }
+    }
+
+    if(folder && folder.length > 0) {
+        router.use(vhost(`*.${domain}`, express.static(`${__dirname}${folder}`)));
+        router.use(vhost(`${domain}`, express.static(`${__dirname}${folder}`)));
+
+        const redirect = (req, res) => {
+            res.redirect(`http://${domain}`);
         };
 
-        emailServer.send(msg);
-
-        res.json({ msg: "Your email has been sent.", sent: true });
-    } else {
-        res.json({ msg: "Invalid request", sent: false, body: req.body });
+        router.use(vhost(`*.${domain}`, redirect));
+        router.use(vhost(`${domain}`, redirect));
     }
 });
+*/
+
+
 
 router.listen(port, () => {
     console.log(`Edgar on port ${port}!`);

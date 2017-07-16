@@ -4,7 +4,11 @@
     "server": {
         "name": "Node-js-512MB-London-2",
         "message": "Lightsail Instance Operating Normally",
-        "link": "https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/Node-js-512MB-London-2/connect"
+        "link": "https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/Node-js-512MB-London-2/connect",
+        "ipaddress": "35.176.95.30",
+        "pingDomain": "dev.williamsamtaylor.co.uk",
+        "tableDomain": "dev.table.williamsamtaylor.co.uk",
+        "localhost": true
     },
     "applications": [
         {
@@ -21,16 +25,6 @@
         "host": "cb75b56dd5bbe6a3c121ed25222dea337f0f84"
     },
     "domains": [
-        {
-            "domain": "35.176.95.30",
-            "folder": "/public/tools/ping/",
-            "description": "Simple ping page for testing the server"
-        },
-        {
-            "domain": "dev.list.williamsamtaylor.co.uk",
-            "folder": "/public/tools/table/",
-            "description": "Table of all apps on the server"
-        },
         {
             "domain": "dev.ca.williamsamtaylor.co.uk",
             "folder": "/public/tools/ping/",
@@ -55,11 +49,6 @@
             "domain": "dev.uws.williamsamtaylor.co.uk",
             "folder": "/public/tools/ping/",
             "description": "Server for the UWS Campus Mobile App"
-        },
-        {
-            "domain": "dev.williamsamtaylor.co.uk",
-            "folder": "/public/tools/ping/",
-            "description": "Simple ping page for the server"
         }
     ]
 }
