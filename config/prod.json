@@ -1,4 +1,5 @@
 {
+    "email": true,
     "port": 3000,
     "background": "http://eskipaper.com/images/london-background-1.jpg",
     "credentials": {

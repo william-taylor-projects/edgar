@@ -1,5 +1,19 @@
 {
+    "email": true,
     "port": 3000,
+    "server": {
+        "name": "Node-js-512MB-London-2",
+        "message": "Lightsail Instance Operating Normally",
+        "link": "https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/Node-js-512MB-London-2/connect"
+    },
+    "applications": [
+        {
+            "name": "",
+            "description": "",
+            "website": "",
+            "github": ""
+        }
+    ],
     "background": "https://cn.pling.com/img/6/2/7/f/9c8f7a703f993fbee422fc92e1415ff04642.jpg",
     "credentials": {
         "username": "cf71f02c99b3f5bec24fed25222dea337f0fc7dbcf",
