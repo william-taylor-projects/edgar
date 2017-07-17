@@ -13,15 +13,49 @@
     },
     "applications": [
         {
-            "name": "William Taylor",
+            "name": "An Edge of 5 Kingdoms",
             "description": [
-                "First sentance.",
-                "Second sentance.",
-                "Third sentance.",
-                "Fourth sentance."
+                "An Edge of 5 Kingdoms is a simple mobile based web game developed at university with a fellow student.",
+                "It was written with Phaser for the game and database storage was managed with Amazon's DynamoDB."
             ],
-            "website": "http://www.williamsamtaylor.co.uk",
-            "github": "http://www.github.com/william-taylor"
+            "website": "http://dev.mobile-game-dev.williamsamtaylor.co.uk/",
+            "github": "https://github.com/bsc-william-taylor/mobile-games-development"
+        },
+        {
+            "name": "",
+            "description": [
+                "",
+                ""
+            ],
+            "website": "",
+            "github": ""
+        },
+        {
+            "name": "",
+            "description": [
+                "",
+                ""
+            ],
+            "website": "",
+            "github": ""
+        },
+        {
+            "name": "",
+            "description": [
+                "",
+                ""
+            ],
+            "website": "",
+            "github": ""
+        },
+        {
+            "name": "",
+            "description": [
+                "",
+                ""
+            ],
+            "website": "",
+            "github": ""
         }
     ],
     "credentials": {

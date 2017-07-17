@@ -53,7 +53,7 @@ const useTools = (config: EdgarConfig, router) => {
     const { server } = config;
 
     if(server.localhost) {
-        newHost('localhost', './tools/ping/');
+        newHost('localhost', './tools/table/');
     } else {
         newHost(server.address, './tools/ping/');
     }
@@ -103,10 +103,12 @@ useTools(config, router);
 useEmail(router);
 
 router.get('/get-applications', (req, res) => {
+    const config = read(filepath);
     res.json(config.applications);
 });
 
 router.get('/get-server-info', (req, res) => {
+    const config = read(filepath);
     res.json(config.server);
 });
 
@@ -123,7 +125,6 @@ config.domains.forEach(desc => {
 
     if(folder && folder.length > 0) {
         newHost(domain, `${path.join(rootFolder, folder)}`);
-        console.log(path.join(rootFolder, folder))
 
         router.use(vhost(`*.${domain}`, (req, res) => res.redirect(`http://${domain}`)));
         router.use(vhost(`${domain}`, (req, res) => res.redirect(`http://${domain}`)));
