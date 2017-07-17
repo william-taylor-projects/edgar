@@ -1,5 +1,4 @@
 {
-    "email": true,
     "port": 3000,
     "server": {
         "background": "https://cn.pling.com/img/6/2/7/f/9c8f7a703f993fbee422fc92e1415ff04642.jpg",
@@ -22,40 +21,40 @@
             "github": "https://github.com/bsc-william-taylor/mobile-games-development"
         },
         {
-            "name": "",
+            "name": "Code Analyser",
             "description": [
-                "",
-                ""
+                "Code Analyser is a React based application which uses Webpack for module bundling. ",
+                "I use the HTML5 File API and Fetch API to take files and upload them onto a Node.js server for analysis. "
             ],
-            "website": "",
-            "github": ""
+            "website": "http://dev.code-analyser.williamsamtaylor.co.uk/",
+            "github": "https://github.com/william-taylor/code-analyser"
         },
         {
-            "name": "",
+            "name": "UWS Campus App",
             "description": [
-                "",
-                ""
+                "UWS Campus App is Java based Android application I made for a university competition.",
+                "It was a competition to see who could come up with the best mobile app for directing students across the campus."
             ],
-            "website": "",
-            "github": ""
+            "website": "https://play.google.com/store/apps/details?id=com.uws.campus_app&hl=en",
+            "github": "https://github.com/william-taylor/uws-campus-app"
         },
         {
-            "name": "",
+            "name": "Mailbox",
             "description": [
-                "",
-                ""
+                "Mailbox is a web ap written in React along with React-Bootstrap. It also uses Webpack for module bundling. ",
+                "The application is very simple it just uses the Fetch API to hit a Node.js endpoint to request the emails to view."
             ],
-            "website": "",
-            "github": ""
+            "website": "http://dev.mailbox.williamsamtaylor.co.uk",
+            "github": "https://github.com/william-taylor/mailbox"
         },
         {
-            "name": "",
+            "name": "Serious Games",
             "description": [
-                "",
-                ""
+                "The serious game web app is just a simple webpage which generates a certificate when users have passed the serious game.",
+                "Other than that it serves no other purpose.   "
             ],
-            "website": "",
-            "github": ""
+            "website": "http://dev.serious-games.williamsamtaylor.co.uk#Dummy Name",
+            "github": "https://github.com/bsc-william-taylor/serious-games"
         }
     ],
     "credentials": {
@@ -89,5 +88,8 @@
             "folder": "public/uws-campus-app",
             "description": "Server for the UWS Campus Mobile App"
         }
+    ],
+    "servers": [
+        
     ]
 }

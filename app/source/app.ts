@@ -12,17 +12,25 @@ import * as path from 'path';
 import * as cors from 'cors';
 import * as fs from 'fs';
 
-interface EdgarConfig {
-    credentials: Object;
-    applications: Object[];
-    server: any;
-    domains: any[];
-}
+import { EdgarConfig } from './types';
 
 commander.version('0.0.1');
 commander.option('-h, --help', 'Help information');
 commander.option('-l, --logs', 'Display logs');
 commander.parse(process.argv);
+
+const start = (path: string, script: string, callback?: Function) => {
+    childProcess.exec(script, { cwd: path }, (err, stdout, stderr) => {
+        if (err instanceof Error) {
+            console.error(err);
+            throw err;
+        }
+
+        if(callback) {
+            callback();
+        }
+    });
+};
 
 const decrypt = (json: any) => {
     const parse = (key: string, text: string) => {
@@ -112,6 +120,19 @@ router.get('/get-server-info', (req, res) => {
     res.json(config.server);
 });
 
+config.servers.forEach(child => {
+    fs.exists(child.script, okay => {
+        if (okay) {
+            const directory = path.dirname(child.script);          
+            const filename = path.basename(child.script);  
+
+            console.log(`${filename} -> ${child.port}`);
+
+            start(directory, `node ${filename} ${process.argv.slice(-1)[0]} ${child.port}`);
+        }
+    });
+});
+
 config.domains.forEach(desc => {
     const { folder, server, domain } = desc;
 
@@ -132,5 +153,5 @@ config.domains.forEach(desc => {
 });
 
 router.listen(port, () => {
-    console.log(`Edgar on port ${port}, Folder: ${rootFolder}!`);
+    console.log(`Edgar on port ${port}!, Folder: ${rootFolder}`);
 });
