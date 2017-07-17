@@ -6,7 +6,7 @@
         "name": "Node-js-512MB-London-2",
         "message": "Lightsail Instance Operating Normally",
         "link": "https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/Node-js-512MB-London-2/connect",
-        "ipaddress": "35.176.95.30",
+        "address": "35.176.95.30",
         "pingDomain": "dev.williamsamtaylor.co.uk",
         "tableDomain": "dev.table.williamsamtaylor.co.uk",
         "localhost": true
@@ -18,7 +18,7 @@
                 "First sentance.",
                 "Second sentance.",
                 "Third sentance.",
-                "Fourth sentance."   
+                "Fourth sentance."
             ],
             "website": "http://www.williamsamtaylor.co.uk",
             "github": "http://www.github.com/william-taylor"
@@ -32,27 +32,27 @@
     "domains": [
         {
             "domain": "dev.ca.williamsamtaylor.co.uk",
-            "folder": "/public/tools/ping/",
+            "folder": "public/code-analyser",
             "description": "Simple code analyser for basic code"
         },
         {
             "domain": "dev.mb.williamsamtaylor.co.uk",
-            "folder": "/public/tools/ping/",
+            "folder": "public/mailbox",
             "description": "Mailbox client for personal email accounts"
         },
         {
             "domain": "dev.mgd.williamsamtaylor.co.uk",
-            "folder": "/public/tools/ping/",
+            "folder": "public/mobile-game-dev",
             "description": "Mobile game submitted as coursework"
         },
         {
             "domain": "dev.sg.williamsamtaylor.co.uk",
-            "folder": "/public/tools/ping/",
+            "folder": "public/serious-games",
             "description": "Server for certification and progress recording"
         },
         {
             "domain": "dev.uws.williamsamtaylor.co.uk",
-            "folder": "/public/tools/ping/",
+            "folder": "public/uws-campus-app",
             "description": "Server for the UWS Campus Mobile App"
         }
     ]

@@ -8,8 +8,16 @@ import * as emailjs from 'emailjs';
 import * as express from 'express';
 import * as crypto from 'crypto';
 import * as vhost from 'vhost';
+import * as path from 'path';
 import * as cors from 'cors';
 import * as fs from 'fs';
+
+interface EdgarConfig {
+    credentials: Object;
+    applications: Object[];
+    server: any;
+    domains: any[];
+}
 
 commander.version('0.0.1');
 commander.option('-h, --help', 'Help information');
@@ -31,11 +39,9 @@ const decrypt = (json: any) => {
     return json;
 }
 
-interface EdgarConfig {
-    credentials: Object;
-    applications: Object[];
-    server: any;
-    domains: any[];
+const newHost = (domain: string, serve: string) => {
+    router.use(vhost(`*.${domain}`, express.static(serve)));
+    router.use(vhost(`${domain}`, express.static(serve)));
 }
 
 const read = (fn: string): EdgarConfig => {
@@ -47,9 +53,13 @@ const useTools = (config: EdgarConfig, router) => {
     const { server } = config;
 
     if(server.localhost) {
-        router.use(vhost(`*.localhost`, express.static(`./tools/table/`)));
-        router.use(vhost(`localhost`, express.static(`./tools/table/`)));
+        newHost('localhost', './tools/ping/');
+    } else {
+        newHost(server.address, './tools/ping/');
     }
+
+    newHost(server.tableDomain, './tools/table/');
+    newHost(server.pingDomain, './tools/ping/');
 }
 
 const useEmail = (router) => {
@@ -79,7 +89,9 @@ const useEmail = (router) => {
     });
 }
 
-const config = read('../config/dev.json');
+const filepath = '../config/dev.json';
+const config = read(filepath);
+const rootFolder = path.dirname(filepath);
 const router = express();
 const port = 3000;
 
@@ -98,8 +110,6 @@ router.get('/get-server-info', (req, res) => {
     res.json(config.server);
 });
 
-
-/*
 config.domains.forEach(desc => {
     const { folder, server, domain } = desc;
 
@@ -112,21 +122,14 @@ config.domains.forEach(desc => {
     }
 
     if(folder && folder.length > 0) {
-        router.use(vhost(`*.${domain}`, express.static(`${__dirname}${folder}`)));
-        router.use(vhost(`${domain}`, express.static(`${__dirname}${folder}`)));
+        newHost(domain, `${path.join(rootFolder, folder)}`);
+        console.log(path.join(rootFolder, folder))
 
-        const redirect = (req, res) => {
-            res.redirect(`http://${domain}`);
-        };
-
-        router.use(vhost(`*.${domain}`, redirect));
-        router.use(vhost(`${domain}`, redirect));
+        router.use(vhost(`*.${domain}`, (req, res) => res.redirect(`http://${domain}`)));
+        router.use(vhost(`${domain}`, (req, res) => res.redirect(`http://${domain}`)));
     }
 });
-*/
-
-
 
 router.listen(port, () => {
-    console.log(`Edgar on port ${port}!`);
+    console.log(`Edgar on port ${port}, Folder: ${rootFolder}!`);
 });
