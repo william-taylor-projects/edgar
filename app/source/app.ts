@@ -137,10 +137,13 @@ config.domains.forEach(desc => {
     const { folder, server, domain } = desc;
 
     if(server && server.length > 0) {
-        const extension = require(server);
-
-        if(typeof extension === 'function') {
-            extension(router);
+        try {
+            const extension = require(server);
+            if(typeof extension === 'function') {
+                extension(router);
+            }
+        } catch(e) {
+            console.log(e);
         }
     }
 
