@@ -13,13 +13,16 @@ const rootFolder = path.dirname(filepath);
 const { servers } = read(filepath);
 
 servers.forEach(child => {
+    const isWin = /^win/.test(process.platform);
     const cwd = path.join(rootFolder, path.dirname(child.script));
     const fn = path.basename(child.script);
 
     fs.exists(path.join(cwd, fn), okay => {
         if (okay) {
             console.log(`npm install at ${cwd}`);
-            start(cwd, `sudo npm install`);
+            start(cwd, `${isWin ? '' : 'sudo'} npm install`, (stdout, stderr) => {
+                console.log(`${fn} : ${stdout}`);
+            });
         }
     });
 });

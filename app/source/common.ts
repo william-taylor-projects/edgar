@@ -13,7 +13,7 @@ export const start = (path: string, script: string, callback?: Function) => {
         }
 
         if (callback) {
-            callback();
+            callback(stdout, stderr);
         }
     });
 };
