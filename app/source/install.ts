@@ -13,15 +13,13 @@ const rootFolder = path.dirname(filepath);
 const { servers } = read(filepath);
 
 servers.forEach(child => {
-    const directory = path.dirname(child.script);
-    const filename = path.basename(child.script);
-    const fullpath = path.join(rootFolder, directory);
+    const cwd = path.join(rootFolder, path.dirname(child.script));
+    const fn = path.basename(child.script);
 
-    fs.exists(path.join(rootFolder, directory, filename), okay => {
+    fs.exists(path.join(cwd, fn), okay => {
         if (okay) {
-            let cwd = path.join(rootFolder, directory);
             console.log(`npm install at ${cwd}`);
-            start(directory, `sudo npm install`);
+            start(cwd, `sudo npm install`);
         }
     });
 });
