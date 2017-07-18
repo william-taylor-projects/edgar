@@ -64,36 +64,55 @@
     },
     "domains": [
         {
-            "domain": "dev.ca.williamsamtaylor.co.uk",
-            "folder": "public/code-analyser",
+            "domain": "dev.serious-games.williamsamtaylor.co.uk",
+            "folder": "/public/serious-games/",
+            "description": "Certification page for serious game"
+        },
+        {
+            "domain": "dev.code-analyser.williamsamtaylor.co.uk",
+            "folder": "/public/code-analyser/",
             "description": "Simple code analyser for basic code"
         },
         {
-            "domain": "dev.mb.williamsamtaylor.co.uk",
-            "folder": "public/mailbox",
+            "domain": "dev.mailbox.williamsamtaylor.co.uk",
+            "folder": "/public/mailbox/",
             "description": "Mailbox client for personal email accounts"
         },
         {
-            "domain": "dev.mgd.williamsamtaylor.co.uk",
-            "folder": "public/mobile-game-dev",
+            "domain": "dev.mobile-game-dev.williamsamtaylor.co.uk",
+            "folder": "/public/mobile-game-dev/",
             "description": "Mobile game submitted as coursework"
-        },
-        {
-            "domain": "dev.sg.williamsamtaylor.co.uk",
-            "folder": "public/serious-games",
-            "description": "Server for certification and progress recording"
-        },
-        {
-            "domain": "dev.uws.williamsamtaylor.co.uk",
-            "folder": "public/uws-campus-app",
-            "description": "Server for the UWS Campus Mobile App"
         }
     ],
     "servers": [
-         {
-            "name": "Example Server",
-            "script": "servers/server.js",
-            "port": 3000,
+        {
+            "name": "Mobile Game Dev Server",
+            "script": "servers/mobile-game-dev/mgd-server.js",
+            "port": 3001,
+            "options": []
+        },
+        {
+            "name": "Serious Games Server",
+            "script": "servers/serious-games/serious-games.js",
+            "port": 3002,
+            "options": []
+        },
+        {
+            "name": "Code Analyser Server",
+            "script": "servers/code-analyser/code-analyser.js",
+            "port": 3003,
+            "options": []
+        },
+        {
+            "name": "UWS Campus App Server",
+            "script": "servers/uws-campus-app/uws-server.js",
+            "port": 3004,
+            "options": []
+        },
+        {
+            "name": "Mailbox",
+            "script": "servers/mailbox/mailer.js",
+            "port": 3005,
             "options": []
         }
     ]

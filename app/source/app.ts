@@ -125,5 +125,5 @@ config.domains.forEach(desc => {
 });
 
 router.listen(port, () => {
-    console.log(`Edgar on port ${port}!, Folder: ${rootFolder}`);
+    console.log(`Edgar on port ${port} folder is ${rootFolder}`);
 });
