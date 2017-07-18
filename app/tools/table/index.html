@@ -63,14 +63,16 @@
     </div>
     <div id='apps'>
         <div class='container'>
-            <div class='card one-half column' style='margin-top:50px;' ng-repeat='app in apps'>
-                <div class='card-body'>
-                    <h3>{{app.name}}</h3>
-                    <p style='text-align: justify;'>
-                        {{app.description.join(' ')}}    
-                    </p>
-                    <a class="button" ng-href={{app.website}} target='_blank'>View</a>
-                    <a class="button" ng-href={{app.github}} target='_blank'>Code</a>
+            <div class='row' ng-repeat='row in rows'>
+                <div class='card one-half column' style='margin-top:50px;' ng-repeat='app in row' >
+                    <div class='card-body'>
+                        <h3>{{app.name}}</h3>
+                        <p style='text-align: justify;'>
+                            {{app.description.join(' ')}}    
+                        </p>
+                        <a class="button" ng-href={{app.website}} target='_blank'>View</a>
+                        <a class="button" ng-href={{app.github}} target='_blank'>Code</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,6 +80,16 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script>
+        function pairArray(a) {
+            var temp = a.slice();
+            var arr = [];
+
+            while (temp.length) {
+                arr.push(temp.splice(0,2));
+            }
+
+            return arr;
+        }
         var app = angular.module('edgarApp', []);
         app.controller('appCtrl', function($scope, $http) {
             $http.get("get-server-info").then(function(response) {
@@ -88,7 +100,7 @@
             });
 
             $http.get('get-applications').then(function(response) {
-                $scope.apps = response.data;
+                $scope.rows = pairArray(response.data);
             });
         });
     </script>
