@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run build && npm run boot",
     "build": "tsc",
-    "boot": "node build/app.js"
+    "boot": "node build/app.js --config=../config/dev/dev.json"
   },
   "author": "",
   "license": "ISC",
