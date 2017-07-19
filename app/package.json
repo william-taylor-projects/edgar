@@ -24,6 +24,7 @@
     "email-validator": "^1.0.7",
     "emailjs": "^1.0.10",
     "express": "^4.15.3",
-    "vhost": "^3.0.2"
+    "vhost": "^3.0.2",
+    "winston": "^2.3.1"
   }
 }

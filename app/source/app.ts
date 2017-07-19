@@ -5,6 +5,7 @@ import * as bodyParser from 'body-parser';
 import * as commander from 'commander';
 import * as emailjs from 'emailjs';
 import * as express from 'express';
+import * as winston from 'winston';
 import * as crypto from 'crypto';
 import * as vhost from 'vhost';
 import * as path from 'path';
