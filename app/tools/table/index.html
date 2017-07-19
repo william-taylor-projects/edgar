@@ -80,6 +80,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script>
+        var app = angular.module('edgarApp', []);
+
         function pairArray(a) {
             var temp = a.slice();
             var arr = [];
@@ -90,7 +92,7 @@
 
             return arr;
         }
-        var app = angular.module('edgarApp', []);
+        
         app.controller('appCtrl', function($scope, $http) {
             $http.get("get-server-info").then(function(response) {
                 $scope.background = response.data.background;
