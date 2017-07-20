@@ -92,13 +92,10 @@ config.servers.forEach(child => {
     const directory = path.dirname(child.script);
     const filename = path.basename(child.script);
     const fulldir = path.join(rootFolder, directory);
-    const fullpath = path.join(rootFolder, directory, filename);
 
-    fs.exists(fullpath, okay => {
+    fs.exists(path.join(rootFolder, directory, filename), okay => {
         if (okay) {
-            console.log(`${filename} -> ${child.port}`);
-
-            start(path.join(rootFolder, directory), `node ${filename} ${process.argv.slice(-1)[0]} ${child.port}`);
+            start(fulldir, `node ${filename} ${process.argv.slice(-1)[0]} ${child.port}`);
         }
     });
 });
