@@ -30,7 +30,7 @@ const useTools = (config: EdgarConfig, router) => {
     const { server } = config;
 
     if (server.localhost) {
-        newHost('localhost', './tools/table/');
+        newHost('localhost', './tools/ping/');
     } else {
         newHost(server.address, './tools/ping/');
     }
