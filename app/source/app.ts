@@ -105,7 +105,7 @@ config.domains.forEach(desc => {
 
     if (server && server.length > 0) {
         try {
-            const extension = require(server);
+            const extension = require(path.join('../', rootFolder, server));
             if (typeof extension === 'function') {
                 extension(router);
             }

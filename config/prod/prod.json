@@ -1,7 +1,55 @@
 {
-    "email": true,
     "port": 3000,
-    "background": "http://eskipaper.com/images/london-background-1.jpg",
+    "server": {
+        "background": "http://eskipaper.com/images/london-background-1.jpg",
+        "name": "Node-js-512MB-London-1",
+        "message": "Lightsail Instance Operating Normally",
+        "link": "https://lightsail.aws.amazon.com/ls/webapp/eu-west-2/instances/Node-js-512MB-London-1/connect",
+        "address": "35.176.95.30",
+        "pingDomain": "prod.williamsamtaylor.co.uk",
+        "tableDomain": "prod.table.williamsamtaylor.co.uk",
+        "localhost": true
+    },
+    "applications": [
+        {
+            "name": "William Taylor",
+            "description": [
+                "My portfolio website was built with Skeleton and designed to be as lightweight as possible.",
+                "It consists of an email form, timeline and skills section.",
+                "The total website size is smaller than the JQuery JavaScript library."
+            ],
+            "website": "http://www.williamsamtaylor.co.uk/",
+            "github": "https://github.com/william-taylor/portfolio"
+        },
+        {
+            "name": "Ladywell Antiques",
+            "description": [
+                "Ladywell Antiques is an app built entirely in Angular to market antique items through a shop like website.",
+                "Content on the website can by dynamically changed through the admin console and uses Bootstrap 4."
+            ],
+            "website": "http://www.ladywell-antiques.co.uk/home",
+            "github": "https://github.com/full-stack-dev/ladywell-antiques"
+        },
+        {
+            "name": "Young Money Ren",
+            "description": [
+                "Young Money Ren is a web app written in React, Redux and Material UI.",
+                "The app is cross platform and exists on the Android and iOS app stores for the widest possible outreach.",
+                "Was designed in collaboration with Barnardo's."
+            ],
+            "website": "http://www.youngmoneyren.org/",
+            "github": "https://github.com/full-stack-dev/young-money-renfrewshire"
+        },
+        {
+            "name": "YMCA Paisley",
+            "description": [
+                "YMCA Paisley is an AngularJs port of a template WordPress website designed to improve on the original with less bugs, better performance and a more modern UI.",
+                "Styling is done with help from the Bulma CSS framework."
+            ],
+            "website": "http://www.paisleyymca.org/",
+            "github": "https://github.com/full-stack-dev/ymca-paisley"
+        }
+    ],
     "credentials": {
         "username": "cf71f02c99b3f5bec24fed25222dea337f0fc7dbcf",
         "password": "f579b5709ab8bff388",
@@ -9,37 +57,31 @@
     },
     "domains": [
         {
-            "domain": "35.176.151.167",
-            "folder": "/tools/ping/"
-        },
-        {
-            "domain": "prod.williamsamtaylor.co.uk",
-            "folder": "/tools/ping/"
-        },
-        {
-            "domain": "prod.list.williamsamtaylor.co.uk",
-            "folder": "/tools/table/"
-        },
-        {
             "domain": "*.williamsamtaylor.co.uk",
-            "folder": "/public/william-taylor/"
+            "folder": "/public/william-taylor/",
+            "description": "Portfolio website"
         },
         {
             "domain": "williamsamtaylor.co.uk",
-            "folder": "/public/william-taylor/"
+            "folder": "/public/william-taylor/",
+            "description": "Portfolio website"
         },
         {
             "domain": "youngmoneyren.org",
             "folder": "/public/young-money-ren/",
-            "server": "./public/young-money-ren/ext/server.js"
+            "server": "/public/young-money-ren/ext/server.js",
+            "description": "Portfolio website"
         },
         {
             "domain": "ladywell-antiques.co.uk",
-            "folder": "/public/ladywell-antiques/"
+            "folder": "/public/ladywell-antiques/",
+            "description": "Portfolio website"
         },
         {
             "domain": "paisleyymca.org",
-            "folder": "/public/paisley-ymca/"
+            "folder": "/public/paisley-ymca/",
+            "description": "Portfolio website"
         }
-    ]
+    ],
+    "servers": []
 }
