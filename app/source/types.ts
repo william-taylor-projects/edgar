@@ -1,8 +1,47 @@
 
+export interface EdgarServer {
+    background: string;
+    name: string;
+    message: string;
+    link: string;
+    address: string;
+    pingDomain: string;
+    tableDomain: string;
+    localhost: boolean;
+}
+
+export interface EdgarCredentials {
+    username: string;
+    password: string;
+    host: string;
+}
+
+export interface EdgarAppDescription {
+    name: string;
+    description: string[];
+    website: string;
+    github: string;
+}
+
+export interface EdgarDomainDescription {
+    domain: string;
+    folder: string;
+    description: string;
+    server?: string;
+}
+
+export interface EdgarServerDescription {
+    name: string;
+    script: string;
+    port: number;
+    options: string[];
+}
+
 export interface EdgarConfig {
-    credentials: Object;
-    applications: Object[];
-    server: any;
-    domains: any[];
-    servers: any[];
+    port: number;
+    server: EdgarServer;
+    credentials: EdgarCredentials;
+    applications: EdgarAppDescription[];
+    domains: EdgarDomainDescription[];
+    servers: EdgarServerDescription[];
 }
