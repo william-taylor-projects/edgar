@@ -1,9 +1,21 @@
 
 import * as childProcess from 'child_process';
+import * as express from 'express';
 import * as crypto from 'crypto';
+import * as vhost from 'vhost';
 import * as fs from 'fs';
 
 import { EdgarConfig } from './types';
+
+export const newHostEntry = (router: any, domain: string, serve: string | Function) => {
+    if (typeof serve == 'string') {
+        router.use(vhost(`*.${domain}`, express.static(serve)));
+        router.use(vhost(`${domain}`, express.static(serve)));
+    } else {
+        router.use(vhost(`*.${domain}`, serve));
+        router.use(vhost(`${domain}`, serve));
+    }
+}
 
 export const start = (path: string, script: string, callback?: Function) => {
     childProcess.exec(script, { cwd: path }, (err, stdout, stderr) => {

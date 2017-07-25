@@ -7,39 +7,23 @@ import * as emailjs from 'emailjs';
 import * as express from 'express';
 import * as winston from 'winston';
 import * as crypto from 'crypto';
-import * as vhost from 'vhost';
 import * as path from 'path';
 import * as cors from 'cors';
 import * as fs from 'fs';
 
-import { start, decrypt, read } from './common';
-import { EdgarConfig } from './types';
+import { LOCALHOST, TABLE_PATH, PING_PATH, EMAIL_ADDRESS } from './constants';
+import { EdgarConfig, EdgarFeature } from './types';
+import { start, decrypt, read, newHostEntry } from './common';
 
-commander.version('0.0.1');
-commander.option('-c, --config <path>', 'specify config file');
-commander.parse(process.argv);
-
-const filepath = commander.config || '../config/dev/dev.json';
-
-const newHost = (domain: string, serve: string) => {
-    router.use(vhost(`*.${domain}`, express.static(serve)));
-    router.use(vhost(`${domain}`, express.static(serve)));
-}
-
-const useTools = (config: EdgarConfig, router) => {
+const useTools: EdgarFeature = (config: EdgarConfig, router: any) => {
     const { server } = config;
 
-    if (server.localhost) {
-        newHost('localhost', './tools/ping/');
-    } else {
-        newHost(server.address, './tools/ping/');
-    }
-
-    newHost(server.tableDomain, './tools/table/');
-    newHost(server.pingDomain, './tools/ping/');
+    newHostEntry(router, server.localhost ? LOCALHOST : server.address, PING_PATH);
+    newHostEntry(router, server.tableDomain, TABLE_PATH);
+    newHostEntry(router, server.pingDomain, PING_PATH);
 }
 
-const useEmail = (router) => {
+const useEmail: EdgarFeature = (config: EdgarConfig, router: any) => {
     const { username, password, host } = decrypt(config.credentials);
     const emailAccount = emailjs.server.connect({
         user: username,
@@ -54,8 +38,8 @@ const useEmail = (router) => {
         if (emailValidator.validate(email) && subject && message) {
             emailAccount.send({
                 text: `${message} Email : ${email}`,
-                from: "wi11berto@yahoo.co.uk",
-                to: "wi11berto@yahoo.co.uk",
+                from: EMAIL_ADDRESS,
+                to: EMAIL_ADDRESS,
                 subject: subject
             });
 
@@ -66,62 +50,101 @@ const useEmail = (router) => {
     });
 }
 
-const config = read(filepath);
-const rootFolder = path.dirname(filepath);
-const router = express();
-const port = 3000;
+class App {
+    router: any;
+    config: EdgarConfig;
+    port: number;
+    root: string;
 
-router.use(bodyParser.json());
-router.use(compression());
-router.use(cors());
+    constructor() {
+        this.parseOptions('0.0.1');
+        this.getConfig();
+    }
 
-useTools(config, router);
-useEmail(router);
+    parseOptions(version: string): void {
+        commander.version(version);
+        commander.option('-c, --config <path>', 'specify config file');
+        commander.parse(process.argv);
 
-router.get('/get-applications', (req, res) => {
-    const config = read(filepath);
-    res.json(config.applications);
-});
-
-router.get('/get-server-info', (req, res) => {
-    const config = read(filepath);
-    res.json(config.server);
-});
-
-config.servers.forEach(child => {
-    const directory = path.dirname(child.script);
-    const filename = path.basename(child.script);
-    const fulldir = path.join(rootFolder, directory);
-
-    fs.exists(path.join(rootFolder, directory, filename), okay => {
-        if (okay) {
-            start(fulldir, `node ${filename} ${process.argv.slice(-1)[0]} ${child.port}`);
+        if (!commander.config) {
+            winston.info('You must specify a config file e.g --config=PATH');
+            process.exit(1);
         }
-    });
-});
+    }
 
-config.domains.forEach(desc => {
-    const { folder, server, domain } = desc;
+    getConfig(): void {
+        this.root = path.dirname(commander.config);
+        this.config = read(commander.config);
+        this.router = express();
+        this.port = 3000;
+    }
 
-    if (server && server.length > 0) {
-        try {
-            const extension = require(path.join('../', rootFolder, server));
-            if (typeof extension === 'function') {
-                extension(router);
+    attachRoutes() {
+        this.router.get('/get-applications', (req, res) => {
+            const config = read(commander.config);
+            res.json(config.applications);
+        });
+
+        this.router.get('/get-server-info', (req, res) => {
+            const config = read(commander.config);
+            res.json(config.server);
+        });
+    }
+
+    attachServers() {
+        this.config.servers.forEach(child => {
+            const directory = path.dirname(child.script);
+            const filename = path.basename(child.script);
+
+            fs.exists(path.join(this.root, directory, filename), okay => {
+                if (okay) {
+                    const cmd = `node ${filename} ${process.argv.slice(-1)[0]} ${child.port}`;
+                    start(path.join(this.root, directory), cmd);
+                }
+            });
+        });
+    }
+
+    attachDomains() {
+        this.config.domains.forEach(desc => {
+            const { folder, server, domain } = desc;
+
+            if (server && server.length > 0) {
+                try {
+                    const extension = require(path.join('../', this.root, server));
+
+                    if (typeof extension === 'function') {
+                        extension(this.router);
+                    }
+                } catch (e) {
+                    winston.info(e);
+                }
             }
-        } catch (e) {
-            console.log(e);
-        }
+
+            if (folder && folder.length > 0) {
+                newHostEntry(this.router, domain, `${path.join(this.root, folder)}`);
+                newHostEntry(this.router, domain, (req, res) => res.redirect(`http://${domain}`));
+            }
+        });
+
     }
 
-    if (folder && folder.length > 0) {
-        newHost(domain, `${path.join(rootFolder, folder)}`);
+    boot(): void {
+        this.router.use(bodyParser.json());
+        this.router.use(compression());
+        this.router.use(cors());
 
-        router.use(vhost(`*.${domain}`, (req, res) => res.redirect(`http://${domain}`)));
-        router.use(vhost(`${domain}`, (req, res) => res.redirect(`http://${domain}`)));
+        useTools(this.config, this.router);
+        useEmail(this.config, this.router);
+
+        this.attachRoutes();
+        this.attachServers();
+        this.attachDomains();
+        this.router.listen(this.port, () => {
+            winston.info(`Edgar on port ${this.port} folder is ${this.root}`);
+        });
     }
-});
+}
 
-router.listen(port, () => {
-    console.log(`Edgar on port ${port} folder is ${rootFolder}`);
-});
+const app = new App();
+app.boot();
