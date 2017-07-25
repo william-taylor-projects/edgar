@@ -1,0 +1,21 @@
+{
+    "port": 3000,
+    "server": {
+        "background": "http://s1.picswalls.com/wallpapers/2014/08/08/free-scottish-landscape-wallpaper_015750772_152.jpg",
+        "name": "Test Name",
+        "message": "Test Server",
+        "link": "random-domain.co.uk",
+        "address": "random-ip",
+        "pingDomain": "random-domain.co.ukk",
+        "tableDomain": "random-domain.co.uk",
+        "localhost": true
+    },
+    "applications": [],
+    "credentials": {
+        "username": "cf71f02c99b3f5bec24fed25222dea337f0fc7dbcf",
+        "password": "f579b5709ab8bff388",
+        "host": "cb75b56dd5bbe6a3c121ed25222dea337f0f84"
+    },
+    "domains": [],
+    "servers": []
+}

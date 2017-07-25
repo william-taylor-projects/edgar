@@ -12,46 +12,12 @@ import * as cors from 'cors';
 import * as fs from 'fs';
 
 import { LOCALHOST, TABLE_PATH, PING_PATH, EMAIL_ADDRESS } from './constants';
-import { EdgarConfig, EdgarFeature } from './types';
+import { EdgarConfig, EdgarExtension } from './types';
 import { start, decrypt, read, newHostEntry } from './common';
+import * as ext from './extensions';
 
-const useTools: EdgarFeature = (config: EdgarConfig, router: any) => {
-    const { server } = config;
-
-    newHostEntry(router, server.localhost ? LOCALHOST : server.address, PING_PATH);
-    newHostEntry(router, server.tableDomain, TABLE_PATH);
-    newHostEntry(router, server.pingDomain, PING_PATH);
-}
-
-const useEmail: EdgarFeature = (config: EdgarConfig, router: any) => {
-    const { username, password, host } = decrypt(config.credentials);
-    const emailAccount = emailjs.server.connect({
-        user: username,
-        password: password,
-        host: host,
-        ssl: true
-    });
-
-    router.post('/send', (req, res) => {
-        const { email, subject, message } = req.body;
-
-        if (emailValidator.validate(email) && subject && message) {
-            emailAccount.send({
-                text: `${message} Email : ${email}`,
-                from: EMAIL_ADDRESS,
-                to: EMAIL_ADDRESS,
-                subject: subject
-            });
-
-            res.json({ msg: "Your email has been sent.", sent: true });
-        } else {
-            res.json({ msg: "Invalid request", sent: false, body: req.body });
-        }
-    });
-}
-
-class App {
-    router: any;
+class Bootstrap {
+    router: express.Application;
     config: EdgarConfig;
     port: number;
     root: string;
@@ -79,72 +45,23 @@ class App {
         this.port = 3000;
     }
 
-    attachRoutes() {
-        this.router.get('/get-applications', (req, res) => {
-            const config = read(commander.config);
-            res.json(config.applications);
-        });
-
-        this.router.get('/get-server-info', (req, res) => {
-            const config = read(commander.config);
-            res.json(config.server);
-        });
-    }
-
-    attachServers() {
-        this.config.servers.forEach(child => {
-            const directory = path.dirname(child.script);
-            const filename = path.basename(child.script);
-
-            fs.exists(path.join(this.root, directory, filename), okay => {
-                if (okay) {
-                    const cmd = `node ${filename} ${process.argv.slice(-1)[0]} ${child.port}`;
-                    start(path.join(this.root, directory), cmd);
-                }
-            });
-        });
-    }
-
-    attachDomains() {
-        this.config.domains.forEach(desc => {
-            const { folder, server, domain } = desc;
-
-            if (server && server.length > 0) {
-                try {
-                    const extension = require(path.join('../', this.root, server));
-
-                    if (typeof extension === 'function') {
-                        extension(this.router);
-                    }
-                } catch (e) {
-                    winston.info(e);
-                }
-            }
-
-            if (folder && folder.length > 0) {
-                newHostEntry(this.router, domain, `${path.join(this.root, folder)}`);
-                newHostEntry(this.router, domain, (req, res) => res.redirect(`http://${domain}`));
-            }
-        });
-
-    }
-
     boot(): void {
         this.router.use(bodyParser.json());
         this.router.use(compression());
         this.router.use(cors());
-
-        useTools(this.config, this.router);
-        useEmail(this.config, this.router);
-
-        this.attachRoutes();
-        this.attachServers();
-        this.attachDomains();
+        this.includeExtensions();
         this.router.listen(this.port, () => {
             winston.info(`Edgar on port ${this.port} folder is ${this.root}`);
         });
     }
+
+    includeExtensions(): void {
+        ext.includeDomains(this.config, this.router, this.root);
+        ext.includeServers(this.config, this.router, this.root);
+        ext.includeEmail(this.config, this.router, this.root);
+        ext.includeTools(this.config, this.router, this.root);
+    }
 }
 
-const app = new App();
+const app = new Bootstrap();
 app.boot();

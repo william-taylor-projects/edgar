@@ -23,8 +23,8 @@ export interface EdgarAppDescription {
     github: string;
 }
 
-export interface EdgarFeature {
-    (config: EdgarConfig, router: any): void;
+export interface EdgarExtension {
+    (config: EdgarConfig, router: any, root: string): void;
 }
 
 export interface EdgarDomainDescription {

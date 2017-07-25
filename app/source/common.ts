@@ -46,6 +46,11 @@ export const decrypt = (json: any) => {
 }
 
 export const read = (fn: string): EdgarConfig => {
-    const contents = fs.readFileSync(fn);
-    return JSON.parse(contents.toString());
+    try {
+        const contents = fs.readFileSync(fn);
+        return JSON.parse(contents.toString());
+    } catch(e){
+        console.log(fn);
+        throw e;
+    }
 }
