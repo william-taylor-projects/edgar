@@ -8,7 +8,7 @@
         "address": "35.176.95.30",
         "pingDomain": "prod.williamsamtaylor.co.uk",
         "tableDomain": "prod.table.williamsamtaylor.co.uk",
-        "localhost": true
+        "localhost": false
     },
     "applications": [
         {

@@ -61,9 +61,14 @@ export const includeTools: EdgarExtension = (config: EdgarConfig, router: any, r
         res.json(config.server);
     });
 
-    newHostEntry(router, server.localhost ? LOCALHOST : server.address, PING_PATH);
+    if (server.localhost) {
+        winston.info('Localhost flag enabled, this should only been done in dev environments');
+        newHostEntry(router, LOCALHOST, PING_PATH);
+    }
+
     newHostEntry(router, server.tableDomain, TABLE_PATH);
     newHostEntry(router, server.pingDomain, PING_PATH);
+    newHostEntry(router, server.address, PING_PATH);
 }
 
 export const includeEmail: EdgarExtension = (config: EdgarConfig, router: any, root: string) => {
