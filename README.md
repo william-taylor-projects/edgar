@@ -1,7 +1,7 @@
 
 <img src='icon.png' align='right' width='150' height='150' />
 
-# Edgar
+# Edgar &nbsp; &nbsp; &nbsp; [![Build status](https://travis-ci.org/william-taylor/portfolio.svg?branch=master)](https://travis-ci.org/william-taylor/edgar) [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=102)](https://github.com/ellerbrock/open-source-badge/) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Edgar is a customizable Node server for running multiple apps in a single LightSail/EC2 instance. It is designed for performance and maximum safety to ensure uninterrupted server uptime and efficiency. It was built with Typescript, Express and a collection of Express middleware to ensure maximum performance and scalability. In production environments Edgar is deployed via PM2 where multiple instances can be launched if needed. 
 
